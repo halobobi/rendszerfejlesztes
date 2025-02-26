@@ -223,12 +223,14 @@ window.onload = function() {
 
     let lastUpdated;
 
+    let responseData;
+
     fetch("https://api.github.com/repos/halobobi/rendszerfejlesztes",{method: "GET",headers: {"Content-Type": "application/json"}})
         .then(response => {return response.json()})
-        .then(data => {lastUpdated = data.updated_at;console.log(data.updated_at)})
+        .then(data => {responseData = data})
         .catch(error => {lastUpdated=`Error fetching data: ${error}`});
 
-    lastUpdated=new Date(lastUpdated).toISOString();
+    lastUpdated=new Date(responseData.updated_at).toISOString();
 
     updated.textContent=`Azure DevTest Lab VM Activity Logs - Last updated: ${lastUpdated}`;
 
