@@ -155,7 +155,7 @@ function processLogs(logs) {
 
     runtimeTable=document.createElement("table");
     runtimeTable.innerHTML=`
-            <thead>
+            <thead class="vm">
                 <tr class="vm">
                     <th class="vm">VM name</th>
                     <th class="vm">Runtime (h)</th>
