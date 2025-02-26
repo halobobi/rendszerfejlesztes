@@ -224,7 +224,7 @@ window.onload = function() {
     let lastUpdated;
 
     fetch("https://api.github.com/repos/halobobi/rendszerfejlesztes")
-        .then(response => {response.json();console.log{response}})
+        .then(response => {response.json();console.log(response)})
         .then(data => {lastUpdated = data.updated_at})
         .catch(error => {lastUpdated=`Error fetching data: ${error}`});
 
