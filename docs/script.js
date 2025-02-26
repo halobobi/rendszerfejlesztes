@@ -2,20 +2,20 @@ function fetchActivityLogs() {
     document.getElementById("goButton").textContent="Loading...";
     document.getElementById("goButton").disabled=true;
 
-    var startDate = new Date(document.getElementById("startDate").value).toISOString();
-    var endDate = new Date(document.getElementById("endDate").value).toISOString();
-    var accessToken = document.getElementById("accessToken").value;
+    let startDate = new Date(document.getElementById("startDate").value).toISOString();
+    let endDate = new Date(document.getElementById("endDate").value).toISOString();
+    let accessToken = document.getElementById("accessToken").value;
     
     if (!accessToken) {
         alert("Error: Access token is required!");
         return;
     }
     
-    var subscriptionId = "81fb9688-128f-4018-98e9-63f4d5961cf4";
-    var resourceId = "/subscriptions/" + subscriptionId + 
+    let subscriptionId = "81fb9688-128f-4018-98e9-63f4d5961cf4";
+    let resourceId = "/subscriptions/" + subscriptionId + 
                      "/resourceGroups/RG-DevTestLab-Rendszerfejlesztes/providers/Microsoft.DevTestLab/labs/Rendszerfejlesztes";
     
-    var baseUrl = "https://management.azure.com/subscriptions/" + subscriptionId + 
+    let baseUrl = "https://management.azure.com/subscriptions/" + subscriptionId + 
                   "/providers/Microsoft.Insights/eventtypes/management/values?" +
                   "api-version=2015-04-01&$filter=" +
                   "eventTimestamp ge '" + startDate + "' and " +
@@ -23,7 +23,7 @@ function fetchActivityLogs() {
                   "resourceId eq '" + resourceId + "' and " + 
                   "status eq 'Succeeded'";
 
-    var allLogs = [];
+    let allLogs = [];
 
     function fetchPage(url) {
         return fetch(url, {
@@ -58,10 +58,10 @@ function fetchActivityLogs() {
 }
 
 function processLogs(logs) {
-    var logContainer = document.getElementById("log-container");
+    let logContainer = document.getElementById("log-container");
     logContainer.innerHTML = "";
 
-    var filteredLogs = logs.filter(log => 
+    let filteredLogs = logs.filter(log => 
         (log.authorization?.action === "microsoft.devtestlab/labs/virtualmachines/stop/action" || 
          log.authorization?.action === "microsoft.devtestlab/labs/virtualmachines/start/action" ||
          log.authorization?.action === "microsoft.devtestlab/labs/virtualmachines/claim/action" ||
@@ -76,26 +76,26 @@ function processLogs(logs) {
         return;
     }
 
-    var groupedLogs = {};
-    var vmUptime = {};
+    let groupedLogs = {};
+    let vmUptime = {};
     if (new Date().getMonth()=="1"){
-        var monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 17, 0, 0, 0).getTime();    
+        let monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 17, 0, 0, 0).getTime();    
     }
     else{
-        var monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1, 0, 0, 0).getTime();
+        let monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1, 0, 0, 0).getTime();
     }
-    var now = new Date().getTime();
+    let now = new Date().getTime();
 
     filteredLogs.forEach(log => {
-        var scope = log.authorization?.scope || "";
-        var vmName = scope.substring(scope.lastIndexOf("/") + 1) || "Unknown VM";
+        let scope = log.authorization?.scope || "";
+        let vmName = scope.substring(scope.lastIndexOf("/") + 1) || "Unknown VM";
         
         if (!groupedLogs[vmName]) {
             groupedLogs[vmName] = [];
             vmUptime[vmName] = 0;
         }
 
-        var eventTime = new Date(log.eventTimestamp).getTime();
+        let eventTime = new Date(log.eventTimestamp).getTime();
         groupedLogs[vmName].push({
             caller: log.caller || "Unknown",
             operationName: log.operationName?.localizedValue || "Unknown Operation",
@@ -131,7 +131,7 @@ function processLogs(logs) {
             });
         }
 
-        var runtime = 0;
+        let runtime = 0;
 
         for (let i = 0; i < groupedLogs[vmName].length; i++) {
             if (groupedLogs[vmName][i].action==="microsoft.devtestlab/labs/virtualmachines/stop/action" ||
@@ -153,8 +153,32 @@ function processLogs(logs) {
         
     });
 
+    runtimeTable=document.getElementById("runtime");
+
+    let sortable_vmUptime=[];
+
+    for (let vm in vmUptime){
+        sortable_vmUptime.push([vm,vmUptime[vm]]);
+    }
+
+
+    sortable_vmUptime.sort((a,b)=>a[1]-b[1]);
+
+    for (let i=0;i<sortable_vmUptime.length;i++){
+        let vm=sortable_vmUptime[i];
+        let newRow = document.createElement("tr");
+        if (i==Math.floor(sortable_vmUptime.length/2)){
+            newRow.innerHTML=`<td style="background-color:yellow">${vm[0]}</td><td style="background-color:yellow">${vm[1]}</td>`
+        }
+        else{
+            newRow.innerHTML=`<td>${vm[0]}</td><td>${vm[1]}</td>`
+        }
+        
+        runtimeTable.appendChild(newRow);
+    }
+
     Object.keys(groupedLogs).sort().forEach(vmName => {
-        var vmTable = document.createElement("div");
+        let vmTable = document.createElement("div");
         vmTable.innerHTML = `
             <h2>${vmName} - Runtime: ${vmUptime[vmName]} h</h2>
             <table class="vm">
@@ -184,17 +208,17 @@ function processLogs(logs) {
 }
 
 window.onload = function() {
-    var startDateInput = document.getElementById("startDate");
-    var endDateInput = document.getElementById("endDate");
+    let startDateInput = document.getElementById("startDate");
+    let endDateInput = document.getElementById("endDate");
 
     if(new Date().getMonth()=="1"){
-        var startDate = new Date(new Date().getFullYear(), new Date().getMonth(), 17, 0, 0, 0).toISOString();
+        let startDate = new Date(new Date().getFullYear(), new Date().getMonth(), 17, 0, 0, 0).toISOString();
     }
     else{
-        var startDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1, 0, 0, 0).toISOString();
+        let startDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1, 0, 0, 0).toISOString();
     }
 
-    var now = new Date().toISOString();
+    let now = new Date().toISOString();
 
     startDateInput.value = startDate.slice(0, 16);
     endDateInput.value = now.slice(0, 16);
