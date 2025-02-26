@@ -230,7 +230,7 @@ window.onload = function() {
 
     lastUpdated=new Date(lastUpdated).toISOString();
 
-    updated.textContent=`Azure DevTest Lab VM Activity Logs - Last updated: ${lastUpdated}`
+    updated.textContent=`Azure DevTest Lab VM Activity Logs - Last updated: ${lastUpdated}`;
 
     let startDateInput = document.getElementById("startDate");
     let endDateInput = document.getElementById("endDate");
