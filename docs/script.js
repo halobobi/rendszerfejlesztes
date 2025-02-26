@@ -1,4 +1,7 @@
 function fetchActivityLogs() {
+    let logContainer = document.getElementById("log-container");
+    logContainer.innerHTML = "";
+
     document.getElementById("goButton").textContent="Loading...";
 
     let startDate = new Date(document.getElementById("startDate").value).toISOString();
@@ -57,9 +60,6 @@ function fetchActivityLogs() {
 }
 
 function processLogs(logs) {
-    let logContainer = document.getElementById("log-container");
-    logContainer.innerHTML = "";
-
     let filteredLogs = logs.filter(log => 
         (log.authorization?.action === "microsoft.devtestlab/labs/virtualmachines/stop/action" || 
          log.authorization?.action === "microsoft.devtestlab/labs/virtualmachines/start/action" ||
