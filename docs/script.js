@@ -1,6 +1,5 @@
 function fetchActivityLogs() {
     document.getElementById("goButton").textContent="Loading...";
-    document.getElementById("goButton").disabled=true;
 
     let startDate = new Date(document.getElementById("startDate").value).toISOString();
     let endDate = new Date(document.getElementById("endDate").value).toISOString();
@@ -78,13 +77,14 @@ function processLogs(logs) {
 
     let groupedLogs = {};
     let vmUptime = {};
+
+    let monthStart;
     if (new Date().getMonth()=="1"){
-        let monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 17, 0, 0, 0).getTime();    
+        monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 17, 0, 0, 0).getTime();    
     }
     else{
-        let monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1, 0, 0, 0).getTime();
+        monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1, 0, 0, 0).getTime();
     }
-    let now = new Date().getTime();
 
     filteredLogs.forEach(log => {
         let scope = log.authorization?.scope || "";
@@ -214,7 +214,6 @@ function processLogs(logs) {
         logContainer.appendChild(vmTable);
     });
 
-    document.getElementById("goButton").disabled=false;
     document.getElementById("goButton").textContent="Go";
 }
 
