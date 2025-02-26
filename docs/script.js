@@ -164,6 +164,7 @@ function processLogs(logs) {
             `;
 
     runtimeTable.setAttribute("id", "runtime");
+    runtimeTable.setAttribute("class","vm");
 
     logContainer.appendChild(runtimeTable);
 
