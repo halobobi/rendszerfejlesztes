@@ -222,15 +222,17 @@ window.onload = function() {
     let startDateInput = document.getElementById("startDate");
     let endDateInput = document.getElementById("endDate");
 
+    let start_date;
+
     if(new Date().getMonth()=="1"){
-        let startDate = new Date(new Date().getFullYear(), new Date().getMonth(), 17, 0, 0, 0).toISOString();
+        start_date = new Date(new Date().getFullYear(), new Date().getMonth(), 17, 0, 0, 0).toISOString();
     }
     else{
-        let startDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1, 0, 0, 0).toISOString();
+        start_date = new Date(new Date().getFullYear(), new Date().getMonth(), 1, 0, 0, 0).toISOString();
     }
 
     let now = new Date().toISOString();
 
-    startDateInput.value = startDate.slice(0, 16);
+    startDateInput.value = start_date.slice(0, 16);
     endDateInput.value = now.slice(0, 16);
 };
