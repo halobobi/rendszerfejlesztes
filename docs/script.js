@@ -153,14 +153,25 @@ function processLogs(logs) {
         
     });
 
-    runtimeTable=document.getElementById("runtime");
+    runtimeTable=document.createElement("table");
+    runtimeTable.innerHTML(`
+            <thead>
+                <tr>
+                    <td>VM name</td>
+                    <td>Runtime (h)</td>
+                </tr>
+            </thead>
+            `)
+            
+    runtimeTable.setAttribute("id", "runtime");
+
+    logContainer.appendChild(runtimeTable);
 
     let sortable_vmUptime=[];
 
     for (let vm in vmUptime){
         sortable_vmUptime.push([vm,vmUptime[vm]]);
     }
-
 
     sortable_vmUptime.sort((a,b)=>a[1]-b[1]);
 
