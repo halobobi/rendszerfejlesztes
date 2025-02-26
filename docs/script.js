@@ -60,6 +60,8 @@ function fetchActivityLogs() {
 }
 
 function processLogs(logs) {
+    let logContainer = document.getElementById("log-container");
+
     let filteredLogs = logs.filter(log => 
         (log.authorization?.action === "microsoft.devtestlab/labs/virtualmachines/stop/action" || 
          log.authorization?.action === "microsoft.devtestlab/labs/virtualmachines/start/action" ||
@@ -181,7 +183,9 @@ function processLogs(logs) {
         let newRow = document.createElement("tr");
         newRow.setAttribute("class","vm");
         if (i==Math.floor(sortable_vmUptime.length/2)){
-            newRow.innerHTML=`<td class="vm" style="background-color:yellow">${vm[0]}</td><td class="vm" style="background-color:yellow">${vm[1]}</td>`
+            newRow.innerHTML=`
+            <td class="vm" style="background-color:yellow">${vm[0]}</td>
+            <td class="vm" style="background-color:yellow">${vm[1]}</td>`
         }
         else{
             newRow.innerHTML=`<td class="vm">${vm[0]}</td><td class="vm">${vm[1]}</td>`
