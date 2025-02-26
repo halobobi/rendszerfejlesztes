@@ -154,15 +154,15 @@ function processLogs(logs) {
     });
 
     runtimeTable=document.createElement("table");
-    runtimeTable.innerHTML(`
+    runtimeTable.innerHTML=`
             <thead>
                 <tr>
                     <td>VM name</td>
                     <td>Runtime (h)</td>
                 </tr>
             </thead>
-            `)
-            
+            `;
+
     runtimeTable.setAttribute("id", "runtime");
 
     logContainer.appendChild(runtimeTable);
