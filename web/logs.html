@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure VM Activity Logs</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #0078D4; }
+        label { font-weight: bold; margin-right: 10px; }
+        input, button { margin: 10px 5px; padding: 8px; }
+        button { background-color: #0078D4; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #005a9e; }
+        div.table-container { margin-top: 20px; }
+        table.controls{display:inline;}
+        td{padding-left: 30px;padding-right: 30px;}
+        table.vm {width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th.vm, td.vm { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th.vm { background-color: #0078D4; color: white; }
+        button{height: 60px;width: 80px;}
+    </style>
+</head>
+<body>
+
+    <h1>Azure DevTest Lab VM Activity Logs</h1>
+
+    <table class="controls">
+        <tr>
+            <td><label for="startDate">Start Date:</label>
+                <input type="datetime-local" id="startDate"></td>
+            <td><label for="accessToken">Access Token:</label><input type="text" id="accessToken" placeholder="Token valid for one hour" required></td>
+            <td rowspan="2"><button id="goButton" onclick="fetchActivityLogs()">Go</button></td>
+        </tr>
+        <tr>
+            <td><label for="endDate">End Date:</label>
+                <input type="datetime-local" id="endDate"></td>
+            <td><label><a target="_blank" href="https://portal.azure.com/#cloudshell">Azure CLI</a> command: </label><code>az account get-access-token --query accessToken --output tsv</code></td>
+        </tr>
+    </table>
+
+    <div id="log-container" class="table-container"></div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
