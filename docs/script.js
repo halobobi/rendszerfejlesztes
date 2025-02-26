@@ -184,7 +184,7 @@ function processLogs(logs) {
             newRow.innerHTML=`<td class="vm" style="background-color:yellow">${vm[0]}</td><td class="vm" style="background-color:yellow">${vm[1]}</td>`
         }
         else{
-            newRow.innerHTML=`<td class="vm">${vm[0]}</td><td>${vm[1]}</td>`
+            newRow.innerHTML=`<td class="vm">${vm[0]}</td><td class="vm">${vm[1]}</td>`
         }
         
         runtimeTable.appendChild(newRow);
