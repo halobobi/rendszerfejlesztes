@@ -219,6 +219,17 @@ function processLogs(logs) {
 }
 
 window.onload = function() {
+    let updated=document.getElementById("title");
+
+    let lastUpdated;
+
+    fetch("https://api.github.com/repos/halobobi/rendszerfejlesztes")
+        .then(response => response.json())
+        .then(data => lastUpdated = data.updated_at)
+        .catch(error => lastUpdated=`Error fetching data: ${error}`);
+
+    updated.textContent=`Azure DevTest Lab VM Activity Logs - Last updated: ${new Date(lastUpdated).toISOString()}`
+
     let startDateInput = document.getElementById("startDate");
     let endDateInput = document.getElementById("endDate");
 
