@@ -228,7 +228,9 @@ window.onload = function() {
         .then(data => lastUpdated = data.updated_at)
         .catch(error => lastUpdated=`Error fetching data: ${error}`);
 
-    updated.textContent=`Azure DevTest Lab VM Activity Logs - Last updated: ${new Date(lastUpdated).toISOString()}`
+    lastUpdated=new Date(lastUpdated).toISOString();
+
+    updated.textContent=`Azure DevTest Lab VM Activity Logs - Last updated: ${lastUpdated}`
 
     let startDateInput = document.getElementById("startDate");
     let endDateInput = document.getElementById("endDate");
