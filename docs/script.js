@@ -157,6 +157,7 @@ function processLogs(logs) {
 
     runtimeTable=document.createElement("table");
     runtimeTable.innerHTML=`
+            <caption>Median marked with yellow</caption>
             <thead class="vm">
                 <tr class="vm">
                     <th class="vm">VM name</th>
@@ -182,7 +183,7 @@ function processLogs(logs) {
         let vm=sortable_vmUptime[i];
         let newRow = document.createElement("tr");
         newRow.setAttribute("class","vm");
-        if (i==Math.floor(sortable_vmUptime.length/2)){
+        if (i==Math.floor(sortable_vmUptime.length/2)-1){
             newRow.innerHTML=`
             <td class="vm" style="background-color:yellow">${vm[0]}</td>
             <td class="vm" style="background-color:yellow">${vm[1]}</td>`
@@ -233,8 +234,8 @@ window.onload = function() {
             }
             return response.json();
         })
-        .then(data => {updated.textContent=`Azure DevTest Lab VM Activity Logs - Last updated: ${data.updated_at}`;})
-        .catch(error => {updated.textContent=`Azure DevTest Lab VM Activity Logs - Last updated: Error fetching data: ${error}`});
+        .then(data => {updated.textContent=`Azure DevTest Lab VM Activity Logs - Repository last updated: ${data.updated_at}`;})
+        .catch(error => {updated.textContent=`Azure DevTest Lab VM Activity Logs - Repository last updated: Error fetching data: ${error}`});
 
     let startDateInput = document.getElementById("startDate");
     let endDateInput = document.getElementById("endDate");
