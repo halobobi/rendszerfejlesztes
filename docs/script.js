@@ -225,10 +225,8 @@ window.onload = function() {
 
     fetch("https://api.github.com/repos/halobobi/rendszerfejlesztes",{method: "GET",headers: {"Content-Type": "application/json"}})
         .then(response => {return response.json()})
-        .then(data => {lastUpdated = data.updated_at})
+        .then(data => {lastUpdated = data.updated_at;console.log(data.updated_at)})
         .catch(error => {lastUpdated=`Error fetching data: ${error}`});
-
-    console.log(lastUpdated);
 
     lastUpdated=new Date(lastUpdated).toISOString();
 
