@@ -228,6 +228,8 @@ window.onload = function() {
         .then(data => lastUpdated = data.updated_at)
         .catch(error => lastUpdated=`Error fetching data: ${error}`);
 
+    console.log(lastUpdated);
+
     lastUpdated=new Date(lastUpdated).toISOString();
 
     updated.textContent=`Azure DevTest Lab VM Activity Logs - Last updated: ${lastUpdated}`;
