@@ -56,6 +56,7 @@ function fetchActivityLogs() {
     .catch(error => {
         console.error("Error fetching activity logs:", error);
         document.getElementById("log-container").innerHTML = `<p>Error loading data: ${error}</p>`;
+        document.getElementById("goButton").textContent="Go";
     });
 }
 
@@ -74,6 +75,7 @@ function processLogs(logs) {
 
     if (filteredLogs.length === 0) {
         logContainer.innerHTML = "<p>No matching logs found.</p>";
+        document.getElementById("goButton").textContent="Go";
         return;
     }
 
