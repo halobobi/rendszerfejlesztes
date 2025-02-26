@@ -179,11 +179,12 @@ function processLogs(logs) {
     for (let i=0;i<sortable_vmUptime.length;i++){
         let vm=sortable_vmUptime[i];
         let newRow = document.createElement("tr");
+        newRow.setAttribute("class","vm");
         if (i==Math.floor(sortable_vmUptime.length/2)){
-            newRow.innerHTML=`<td style="background-color:yellow">${vm[0]}</td><td style="background-color:yellow">${vm[1]}</td>`
+            newRow.innerHTML=`<td class="vm" style="background-color:yellow">${vm[0]}</td><td style="background-color:yellow">${vm[1]}</td>`
         }
         else{
-            newRow.innerHTML=`<td>${vm[0]}</td><td>${vm[1]}</td>`
+            newRow.innerHTML=`<td class="vm">${vm[0]}</td><td>${vm[1]}</td>`
         }
         
         runtimeTable.appendChild(newRow);
