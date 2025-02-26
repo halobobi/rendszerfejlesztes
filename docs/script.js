@@ -221,18 +221,15 @@ function processLogs(logs) {
 window.onload = function() {
     let updated=document.getElementById("title");
 
-    let lastUpdated;
-
-    let responseData;
-
     fetch("https://api.github.com/repos/halobobi/rendszerfejlesztes",{method: "GET",headers: {"Content-Type": "application/json"}})
-        .then(response => {return response.json()})
-        .then(data => {responseData = data})
-        .catch(error => {lastUpdated=`Error fetching data: ${error}`});
-
-    lastUpdated=new Date(responseData.updated_at).toISOString();
-
-    updated.textContent=`Azure DevTest Lab VM Activity Logs - Last updated: ${lastUpdated}`;
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("HTTP error! Status: " + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {updated.textContent=`Azure DevTest Lab VM Activity Logs - Last updated: ${data.updated_at}`;})
+        .catch(error => {updated.textContent=`Azure DevTest Lab VM Activity Logs - Last updated: Error fetching data: ${error}`});
 
     let startDateInput = document.getElementById("startDate");
     let endDateInput = document.getElementById("endDate");
