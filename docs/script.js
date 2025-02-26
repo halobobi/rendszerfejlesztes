@@ -157,7 +157,7 @@ function processLogs(logs) {
 
     runtimeTable=document.createElement("table");
     runtimeTable.innerHTML=`
-            <caption>Median marked with yellow</caption>
+            <caption>Median marked with yellow.</caption>
             <thead class="vm">
                 <tr class="vm">
                     <th class="vm">VM name</th>
