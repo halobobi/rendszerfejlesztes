@@ -235,7 +235,7 @@ function processLogs(logs) {
     Object.keys(groupedLogs).sort().forEach(vmName => {
         let vmTable = document.createElement("div");
         vmTable.innerHTML = `
-            <h2>VM name: ${vmName} - Team name: ${teams[vm[0]]} -Runtime: ${vmUptime[vmName]} h</h2>
+            <h2>VM name: ${vmName} - Team name: ${teams[vmName]} -Runtime: ${vmUptime[vmName]} h</h2>
             <table class="vm">
                 <thead>
                     <tr class="vm">
