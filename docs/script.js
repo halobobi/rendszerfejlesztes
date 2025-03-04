@@ -210,11 +210,9 @@ function processLogs(logs) {
 
     for (let i=0;i<sortable_vmUptime.length;i++){
         let vm=sortable_vmUptime[i];
-        let teamName;
-        if (vm[0] in teams){
-            teamName=teams[vm[0]]
-        }else{
-            teamName="VM_default_team"
+
+        if (!(vm[0] in teams)){
+            teams[vm[0]]="VM_default_team"
         }
 
         let newRow = document.createElement("tr");
@@ -222,12 +220,12 @@ function processLogs(logs) {
         if (i==Math.floor(sortable_vmUptime.length/2)-1){
             newRow.innerHTML=`
             <td class="vm" style="background-color:yellow">${vm[0]}</td>
-            <td class="vm" style="background-color:yellow">${teamName}</td>
+            <td class="vm" style="background-color:yellow">${teams[vm[0]]}</td>
             <td class="vm" style="background-color:yellow">${vm[1]}</td>`
         }
         else{
             newRow.innerHTML=`<td class="vm">${vm[0]}</td>
-            <td>${teamName}</td>
+            <td>${teams[vm[0]]}</td>
             <td class="vm">${vm[1]}</td>`
         }
 
@@ -237,7 +235,7 @@ function processLogs(logs) {
     Object.keys(groupedLogs).sort().forEach(vmName => {
         let vmTable = document.createElement("div");
         vmTable.innerHTML = `
-            <h2>VM name: ${vmName} - Team name: ${teamName} -Runtime: ${vmUptime[vmName]} h</h2>
+            <h2>VM name: ${vmName} - Team name: ${teams[vm[0]]} -Runtime: ${vmUptime[vmName]} h</h2>
             <table class="vm">
                 <thead>
                     <tr class="vm">
