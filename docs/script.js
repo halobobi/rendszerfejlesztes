@@ -273,7 +273,7 @@ window.onload = function() {
             }
             return response.json();
         })
-        .then(data => {updated.textContent=`Repository last updated: ${new Date(data.updated_at).toISOString()}`;})
+        .then(data => {updated.textContent=`Repository last updated: ${new Date(data.updated_at).toLocaleString()}`;})
         .catch(error => {updated.textContent=`Failed to get repository data. Error fetching data: ${error}`});
 
     let startDateInput = document.getElementById("startDate");
