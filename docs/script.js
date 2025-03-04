@@ -211,7 +211,7 @@ function processLogs(logs) {
         let vm=sortable_vmUptime[i];
 
         if (!(vm[0] in teams)){
-            teams[vm[0]]="VM_default_team"
+            teams[vm[0]]="-"
         }
 
         let newRow = document.createElement("tr");
@@ -224,7 +224,7 @@ function processLogs(logs) {
         }
         else{
             newRow.innerHTML=`<td class="vm">${vm[0]}</td>
-            <td>${teams[vm[0]]}</td>
+            <td class="vm">${teams[vm[0]]}</td>
             <td class="vm">${vm[1]}</td>`
         }
 
