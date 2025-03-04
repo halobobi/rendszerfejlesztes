@@ -25,32 +25,6 @@ function fetchActivityLogs() {
                   "resourceId eq '" + resourceId + "' and " +
                   "status eq 'Succeeded'";
 
-    const teams = {
-        "rendfejl1000": "zsbkm",
-        "rendfejl1002": "Pookie Bears",
-        "rendfejl1003": "Négy",
-        "rendfejl1004": "It Girls",
-        "rendfejl1005": "Kisvárda",
-        "rendfejl1006": "Hajnyírók",
-        "rendfejl1008": "Webshoproni",
-        "rendfejl1009": "Fifty-Fifty",
-        "rendfejl1010": "DebugDivas",
-        "rendfejl1011": "CsokiKommandó",
-        "rendfejl1012": "Beton",
-        "rendfejl1013": "NiBeSzoCsa",
-        "rendfejl1016": "DataGridView",
-        "rendfejl1018": "Vertikalrotierendekatze",
-        "rendfejl1019": "BaBoMaZso",
-        "rendfejl1029": "Dream Team",
-        "rendfejl2000": "Perfekt",
-        "rendfejl10000": "ITElite",
-        "rendfejl10001": "Spongyabob",
-        "rendfejl10002": "Kék",
-        "rendfejl10003": "A rendszerfejlesztők",
-        "rendfejl10004": "Tegnapra kellett volna",
-        "rendfejl10006": "Bandidos"
-      };
-
     let allLogs = [];
 
     function fetchPage(url) {
@@ -88,6 +62,32 @@ function fetchActivityLogs() {
 
 function processLogs(logs) {
     let logContainer = document.getElementById("log-container");
+
+    const teams = {
+        "rendfejl1000": "zsbkm",
+        "rendfejl1002": "Pookie Bears",
+        "rendfejl1003": "Négy",
+        "rendfejl1004": "It Girls",
+        "rendfejl1005": "Kisvárda",
+        "rendfejl1006": "Hajnyírók",
+        "rendfejl1008": "Webshoproni",
+        "rendfejl1009": "Fifty-Fifty",
+        "rendfejl1010": "DebugDivas",
+        "rendfejl1011": "CsokiKommandó",
+        "rendfejl1012": "Beton",
+        "rendfejl1013": "NiBeSzoCsa",
+        "rendfejl1016": "DataGridView",
+        "rendfejl1018": "Vertikalrotierendekatze",
+        "rendfejl1019": "BaBoMaZso",
+        "rendfejl1029": "Dream Team",
+        "rendfejl2000": "Perfekt",
+        "rendfejl10000": "ITElite",
+        "rendfejl10001": "Spongyabob",
+        "rendfejl10002": "Kék",
+        "rendfejl10003": "A rendszerfejlesztők",
+        "rendfejl10004": "Tegnapra kellett volna",
+        "rendfejl10006": "Bandidos"
+      };
 
     let filteredLogs = logs.filter(log =>
         (log.authorization?.action === "microsoft.devtestlab/labs/virtualmachines/stop/action" ||
