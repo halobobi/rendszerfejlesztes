@@ -150,7 +150,7 @@ function processLogs(logs) {
                     action: "microsoft.devtestlab/labs/virtualmachines/stop/action"
                 });
             }
-        
+
         if (groupedLogs[vmName][groupedLogs[vmName].length-1].action === "microsoft.devtestlab/labs/virtualmachines/stop/action" ||
             groupedLogs[vmName][groupedLogs[vmName].length-1].action === "Microsoft.DevTestLab/labs/virtualmachines/stop/action"){
             // nem ebben a hónapban lett elindítva
