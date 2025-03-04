@@ -7,23 +7,49 @@ function fetchActivityLogs() {
     let startDate = new Date(document.getElementById("startDate").value).toISOString();
     let endDate = new Date(document.getElementById("endDate").value).toISOString();
     let accessToken = document.getElementById("accessToken").value;
-    
+
     if (!accessToken) {
         alert("Error: Access token is required!");
         return;
     }
-    
+
     let subscriptionId = "81fb9688-128f-4018-98e9-63f4d5961cf4";
-    let resourceId = "/subscriptions/" + subscriptionId + 
+    let resourceId = "/subscriptions/" + subscriptionId +
                      "/resourceGroups/RG-DevTestLab-Rendszerfejlesztes/providers/Microsoft.DevTestLab/labs/Rendszerfejlesztes";
-    
-    let baseUrl = "https://management.azure.com/subscriptions/" + subscriptionId + 
+
+    let baseUrl = "https://management.azure.com/subscriptions/" + subscriptionId +
                   "/providers/Microsoft.Insights/eventtypes/management/values?" +
                   "api-version=2015-04-01&$filter=" +
                   "eventTimestamp ge '" + startDate + "' and " +
                   "eventTimestamp le '" + endDate + "' and " +
-                  "resourceId eq '" + resourceId + "' and " + 
+                  "resourceId eq '" + resourceId + "' and " +
                   "status eq 'Succeeded'";
+
+    const teams = {
+        "rendfejl1000": "zsbkm",
+        "rendfejl1002": "Pookie Bears",
+        "rendfejl1003": "Négy",
+        "rendfejl1004": "It Girls",
+        "rendfejl1005": "Kisvárda",
+        "rendfejl1006": "Hajnyírók",
+        "rendfejl1008": "Webshoproni",
+        "rendfejl1009": "Fifty-Fifty",
+        "rendfejl1010": "DebugDivas",
+        "rendfejl1011": "CsokiKommandó",
+        "rendfejl1012": "Beton",
+        "rendfejl1013": "NiBeSzoCsa",
+        "rendfejl1016": "DataGridView",
+        "rendfejl1018": "Vertikalrotierendekatze",
+        "rendfejl1019": "BaBoMaZso",
+        "rendfejl1029": "Dream Team",
+        "rendfejl2000": "Perfekt",
+        "rendfejl10000": "ITElite",
+        "rendfejl10001": "Spongyabob",
+        "rendfejl10002": "Kék",
+        "rendfejl10003": "A rendszerfejlesztők",
+        "rendfejl10004": "Tegnapra kellett volna",
+        "rendfejl10006": "Bandidos"
+      };
 
     let allLogs = [];
 
@@ -63,12 +89,12 @@ function fetchActivityLogs() {
 function processLogs(logs) {
     let logContainer = document.getElementById("log-container");
 
-    let filteredLogs = logs.filter(log => 
-        (log.authorization?.action === "microsoft.devtestlab/labs/virtualmachines/stop/action" || 
+    let filteredLogs = logs.filter(log =>
+        (log.authorization?.action === "microsoft.devtestlab/labs/virtualmachines/stop/action" ||
          log.authorization?.action === "microsoft.devtestlab/labs/virtualmachines/start/action" ||
          log.authorization?.action === "microsoft.devtestlab/labs/virtualmachines/claim/action" ||
 
-         log.authorization?.action === "Microsoft.DevTestLab/labs/virtualmachines/stop/action" || 
+         log.authorization?.action === "Microsoft.DevTestLab/labs/virtualmachines/stop/action" ||
          log.authorization?.action === "Microsoft.DevTestLab/labs/virtualmachines/start/action" ||
          log.authorization?.action === "Microsoft.DevTestLab/labs/virtualmachines/claim/action")
     );
@@ -84,7 +110,7 @@ function processLogs(logs) {
 
     let monthStart;
     if (new Date().getMonth()=="1"){
-        monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 17, 0, 0, 0).getTime();    
+        monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 17, 0, 0, 0).getTime();
     }
     else{
         monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1, 0, 0, 0).getTime();
@@ -93,7 +119,7 @@ function processLogs(logs) {
     filteredLogs.forEach(log => {
         let scope = log.authorization?.scope || "";
         let vmName = scope.substring(scope.lastIndexOf("/") + 1) || "Unknown VM";
-        
+
         if (!groupedLogs[vmName]) {
             groupedLogs[vmName] = [];
             vmUptime[vmName] = 0;
@@ -143,18 +169,18 @@ function processLogs(logs) {
 
                 if (groupedLogs[vmName][i+1].action==="microsoft.devtestlab/labs/virtualmachines/start/action" ||
                     groupedLogs[vmName][i+1].action==="microsoft.devtestlab/labs/virtualmachines/claim/action" ||
-                
+
                     groupedLogs[vmName][i+1].action==="Microsoft.DevTestLab/labs/virtualmachines/start/action" ||
                     groupedLogs[vmName][i+1].action==="Microsoft.DevTestLab/labs/virtualmachines/claim/action"){
                         runtime+= groupedLogs[vmName][i].timestamp-groupedLogs[vmName][i+1].timestamp;
                         i++;
                     }
             }
-            
+
         }
 
         vmUptime[vmName] = (runtime / 3600000).toFixed(1);
-        
+
     });
 
     runtimeTable=document.createElement("table");
@@ -163,6 +189,7 @@ function processLogs(logs) {
             <thead class="vm">
                 <tr class="vm">
                     <th class="vm">VM name</th>
+                    <th class="vm">Team name</th>
                     <th class="vm">Runtime (h)</th>
                 </tr>
             </thead>
@@ -183,24 +210,34 @@ function processLogs(logs) {
 
     for (let i=0;i<sortable_vmUptime.length;i++){
         let vm=sortable_vmUptime[i];
+        let teamName;
+        if (vm[0] in teams){
+            teamName=teams[vm[0]]
+        }else{
+            teamName="VM_default_team"
+        }
+
         let newRow = document.createElement("tr");
         newRow.setAttribute("class","vm");
         if (i==Math.floor(sortable_vmUptime.length/2)-1){
             newRow.innerHTML=`
             <td class="vm" style="background-color:yellow">${vm[0]}</td>
+            <td class="vm" style="background-color:yellow">${teamName}</td>
             <td class="vm" style="background-color:yellow">${vm[1]}</td>`
         }
         else{
-            newRow.innerHTML=`<td class="vm">${vm[0]}</td><td class="vm">${vm[1]}</td>`
+            newRow.innerHTML=`<td class="vm">${vm[0]}</td>
+            <td>${teamName}</td>
+            <td class="vm">${vm[1]}</td>`
         }
-        
+
         runtimeTable.appendChild(newRow);
     }
 
     Object.keys(groupedLogs).sort().forEach(vmName => {
         let vmTable = document.createElement("div");
         vmTable.innerHTML = `
-            <h2>${vmName} - Runtime: ${vmUptime[vmName]} h</h2>
+            <h2>VM name: ${vmName} - Team name: ${teamName} -Runtime: ${vmUptime[vmName]} h</h2>
             <table class="vm">
                 <thead>
                     <tr class="vm">
@@ -227,7 +264,7 @@ function processLogs(logs) {
 }
 
 window.onload = function() {
-    let updated=document.getElementById("title");
+    let updated=document.getElementById("repoUpdated");
 
     fetch("https://api.github.com/repos/halobobi/rendszerfejlesztes",{method: "GET",headers: {"Content-Type": "application/json"}})
         .then(response => {
@@ -236,8 +273,8 @@ window.onload = function() {
             }
             return response.json();
         })
-        .then(data => {updated.textContent=`Azure DevTest Lab VM Activity Logs - Repository last updated: ${data.updated_at}`;})
-        .catch(error => {updated.textContent=`Azure DevTest Lab VM Activity Logs - Repository last updated: Error fetching data: ${error}`});
+        .then(data => {updated.textContent=`Repository last updated: ${new Date(data.updated_at).toISOString()}`;})
+        .catch(error => {updated.textContent=`Failed to get repository data. Error fetching data: ${error}`});
 
     let startDateInput = document.getElementById("startDate");
     let endDateInput = document.getElementById("endDate");
